@@ -8,7 +8,7 @@ I make LLM and agent systems **fail loudly instead of corrupting silently** — 
 
 #### 🔬 Featured research
 
-**[When Server Instructions Are Marked as Trusted](https://github.com/feiiiiii5/mcp-trust-boundary-writeup)** — a trust-boundary flaw in `pydantic-ai`'s MCP integration: server-controlled instructions misclassified as trusted static content, enabling prompt-cache persistence of poisoned instructions (same amplification pattern as MCP-2026-015). Fix implemented & fully tested; independently confirmed in NVIDIA `garak`.
+Independent research on **trust boundaries in MCP/agent frameworks** (instruction trust-tier misclassification and prompt-cache amplification). Currently going through coordinated disclosure with the affected upstream project — full write-up will be published once the fix lands.
 
 #### 🛠️ Open source highlights
 
