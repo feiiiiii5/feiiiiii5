@@ -1,4 +1,4 @@
-### Hi, I'm Yufeiyang 👋
+### Hi, I'm Chen Yufeiyang 👋
 
 Undergraduate in **Cyberspace Security** at Sun Yat-sen University, working toward **Fall 2027 M.S. programs in AI Security / AI Systems**.
 
