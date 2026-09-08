@@ -1,6 +1,6 @@
 ### Hi, I'm Yufeiyang Chen 👋
 
-Undergraduate in **Cyberspace Security** at Sun Yat-sen University.
+Undergraduate in **Cyber Science and Technology** at Sun Yat-sen University.
 
 I work on one defect family across LLM and agent systems: **a failure being converted into a
 success-looking result at the wrong layer**. An LLM judge that never ran becoming a legitimate
