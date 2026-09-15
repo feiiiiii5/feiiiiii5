@@ -1,98 +1,43 @@
-### Hi, I'm Yufeiyang Chen 👋
+### Yufeiyang Chen
 
-Undergraduate in **Cyber Science and Technology** at Sun Yat-sen University.
+Undergrad studying Cyber Science and Technology at Sun Yat-sen University.
 
-I work on one defect family across LLM and agent systems: **a failure being converted into a
-success-looking result at the wrong layer**. A judge model that never ran becoming a legitimate
-`0.0` score. A retry budget running out and the exhaustion being reported as an answer. A path
-check that accepts `/tmp/scan/skill-evil` because the allowed directory is `/tmp/scan/skill`.
-Nothing crashes, nothing is logged, and every conclusion built on top is wrong.
+I submit patches to open-source ML and evaluation libraries, mainly around exception handling, fallback logic, and edge cases in test runners. I started contributing upstream in July 2026. If a PR or issue I file is unhelpful, noisy, or based on incorrect assumptions, please close it or leave a comment.
 
-**91 merged pull requests across 31 AI/ML projects.** Most of my work lives in other people's
-repositories; the table below is the part worth reading.
+#### failroute
 
----
+An AST-based static analyzer for Python that checks for exception handlers returning values callers cannot distinguish from successful runs. It detects six patterns: swallowed exceptions, silent constant fallbacks, masked exceptions, `contextlib.suppress` blocks, implicit `None` fall-through, and exception variables rebound inside their handlers.
 
-#### 🛠️ Merged upstream
+`pip install failroute`
 
-| Project | ★ | What the change does |
-|---|---:|---|
-| [`modelcontextprotocol/servers#4662`](https://github.com/modelcontextprotocol/servers/pull/4662) | 90.3k | The memory server registered `search_nodes` with an unbounded `query`, so an oversized query still forced a full O(graph) scan over every entity name, type and observation for no retrieval value. Adds a length cap enforced by an exported schema, so the constraint is testable on its own. |
-| [`run-llama/llama_index#22527`](https://github.com/run-llama/llama_index/pull/22527) | 52.1k | An empty embedding payload — which application code produces naturally, e.g. `"   ".split()` — was sent to AWS and came back as `ValidationException: Invalid parameter combination`, pointing operators at credentials and region config rather than at the empty list. Now rejected locally, before the call, on the shared gate for both the sync and async paths. |
-| [`EleutherAI/lm-evaluation-harness#4039`](https://github.com/EleutherAI/lm-evaluation-harness/pull/4039) | 14.0k | The thousands-separator rule in answer normalisation fused bare digit tuples: gold `"0,1"` became `"01"`, so a model answering `(0,1)` was marked wrong. Twelve MATH gold answers were corrupted this way. |
-| [`Tencent/AI-Infra-Guard#539`](https://github.com/Tencent/AI-Infra-Guard/pull/539) | 6.3k | Agent file tools used `str.startswith(base_dir)` for path containment, so `/tmp/scan/skill-evil/secrets.txt` passed a check meant to confine access to `/tmp/scan/skill` — a prompt-injected `SKILL.md` could read and write outside the sandbox. Replaced with `os.path.commonpath`. The maintainer merged it as *"this important security fix … a real prompt-injection attack vector."* |
-| [`microsoft/PyRIT#2467`](https://github.com/microsoft/PyRIT/pull/2467) | 4.5k | Made the GCG optimizer's implicit cross-iteration invariants explicit and typed. The core maintainer opened **eight independent review threads** across 21 inline comments — including one where my own assertion used `inf` as a sentinel for "not updated", which would have misfired on a legitimately infinite loss. The implementation that shipped is mine. |
-| [`UKGovernmentBEIS/inspect_ai#4906`](https://github.com/UKGovernmentBEIS/inspect_ai/pull/4906) | 2.8k | When remote exec exhausted its retries the sandbox's own error was discarded and a bare `RetryError` surfaced instead, hiding why the sandbox failed. Reports the underlying error. Merged after a full review cycle: changes requested, revised, approved. |
-| [`UKGovernmentBEIS/inspect_evals#2132`](https://github.com/UKGovernmentBEIS/inspect_evals/pull/2132) | 0.7k | Over repeated epochs the calibration-error metric averaged attempts before scoring, so confidently-wrong and unconfidently-right answers cancelled out. A run where every attempt was maximally miscalibrated reported `cerr = 0.0`; the attempt-level truth was `1.0`. No exception, no warning. |
-| [`cvs-health/uqlm#459`](https://github.com/cvs-health/uqlm/pull/459) | 1.2k | One LLM judge exhausting its retries left a `NaN` that plain `np.mean/max/min/median` propagated into **every** panel statistic for that prompt, while the run reported success. A panel exists so that one judge can fail without spoiling the result. |
+I tested it against eight pinned PyPI distributions (2,124 Python files, 524,229 lines scanned). It generated 621 candidate sites. Four standard linters (ruff, bandit, pylint, and flake8 with flake8-bugbear) together covered 255 of those.
 
-Also merged into Trail of Bits `fickling`, `pydantic-ai`, `xgrammar`, `qdrant-client`, `pandera`,
-`vllm`, `letta`, `griptape`, `openlit` and others — static-analysis false positives, data-contract
-and structured-generation correctness, local/server semantic parity.
+Evaluating a labeled sample showed a low defect yield:
+* In findings standard linters missed, roughly 1 in 56 was an actual bug.
+* In findings standard linters already flagged, 12 in 48 were actual bugs.
+* All 12 confirmed bugs were bare `except:` lines. Running `flake8 --select E722` caught all 12 across 134 total candidates, reaching the same recall with a search space roughly five times smaller.
+* The benchmark labels were produced by two rounds of LLM agents without human review. A preprint covering the methodology is in preparation.
 
-The pattern is always the same shape: find the layer where a failure stops being visible, then
-make it visible again without changing the behaviour anyone depends on.
+Project details:
+* 221 tests on Python 3.9 through 3.13 across Linux, macOS, and Windows.
+* Runs clean under `mypy --strict`, outputs SARIF for GitHub code scanning, and reports zero findings when run on its own code.
+* Validated on `bench/realworld/` (87 cases anchored to the pinned corpus). The internal test fixtures share my own blind spots and are only used as regression checks.
+* Uses an AI-assisted development workflow where models draft implementations, deterministic tests verify them, and manual review decides what gets merged (`docs/process.md`).
 
----
+#### Upstream pull requests
 
-#### 🚩 failroute — a detector for that class
+| Repo / PR | Notes |
+|---|---|
+| [microsoft/PyRIT #2467](https://github.com/microsoft/PyRIT/pull/2467) | Refactored loop state from loose locals into explicit types (issue opened by maintainer). My initial patch used `loss = float("inf")` as a sentinel for unmeasured runs, which would hide actual numeric overflows. The maintainer caught it in review and I replaced it with an explicit boolean flag so the measurement state is clear. |
+| [UKGovernmentBEIS/inspect_evals #2132](https://github.com/UKGovernmentBEIS/inspect_evals/pull/2132) | Multi-epoch calibration error in Humanity's Last Exam was being averaged across epochs before calculating calibration (issue opened by maintainer). Made a reproduction case showing this outputs 0.0 calibration error instead of 1.0 on miscalibrated answers. Fixed the multi-epoch code path, kept single-epoch outputs byte-identical, and bumped the task version. |
+| [cvs-health/uqlm #459](https://github.com/cvs-health/uqlm/pull/459) | When an evaluation model ran out of retries, it returned unhandled `NaN` values that silently poisoned the aggregate score for the whole prompt while exiting cleanly. Pruned failed models from the calculation and flagged affected prompts. |
+| [UKGovernmentBEIS/inspect_ai #5068](https://github.com/UKGovernmentBEIS/inspect_ai/pull/5068) | Removed a try/except that swallowed permission errors where an internal code comment indicated they should be raised. |
+| [Tencent/AI-Infra-Guard #539](https://github.com/Tencent/AI-Infra-Guard/pull/539) | Fixed a directory path check that allowed sibling folders sharing the same name prefix (issue reported by another user). |
 
-[![CI](https://github.com/feiiiiii5/failroute/actions/workflows/ci.yml/badge.svg)](https://github.com/feiiiiii5/failroute/actions/workflows/ci.yml)
-[![PyPI](https://img.shields.io/pypi/v/failroute)](https://pypi.org/project/failroute/)
+Three of the five issues above were scoped and opened by other people before I worked on them.
 
-After fixing enough of these one at a time upstream, I stopped patching instances and tried to
-name the category. `failroute` is a static analyser for **failure-routing**, targeting a gap no
-syntactic linter covers by construction: `except Exception: return 0.0` is invisible to ruff,
-Bandit and flake8-bugbear, and ruff's own `SIM105` actively recommends rewriting `try/except/pass`
-into `contextlib.suppress(...)` — semantically identical, and invisible to every shipped linter
-afterwards.
+#### Notes on reporting bugs
 
-**Measured on 8 pinned PyPI releases** (2,124 `.py` files, 524,229 lines), paper frame `v0.8.0`:
+I check candidate issues against actual call paths before opening tickets or PRs. For example, running failroute over PyRIT gave several dozen warnings. I stepped through twelve of them in the codebase, found that all twelve were deliberate design decisions, and filed zero issues. If an edge case does not cause a practical problem in how the software runs, I leave it alone.
 
-- **621 findings.** The union of four established linters (ruff, Bandit, pylint, flake8-bugbear)
-  co-locates with **255 of them — 41.1%**, leaving 366 that none of them reach. All 255 come from
-  pylint alone; the other three add nothing on top of it.
-- **The headline result is negative, and it is the reason the project is worth reading.** On a
-  sample of 80 findings, **80% turned out to be deliberate design contracts** and only **15%**
-  were real defects. A syntactic layer cannot tell an intentional degradation from a bug — and
-  neither, it turns out, can mine.
-- **The cheapest baseline nearly matches it.** `flake8 --select E722` yields 134 candidates, of
-  which 9.0% are labelled defects — and **all twelve confirmed defects are inside that set**.
-  Reading 134 sites gets you what reading 621 gets you.
-- The labels are weak by construction: two LLM rounds agreed 80/80, which is evidence of shared
-  bias, not of reliability. Both label sets are committed so the agreement can be checked item
-  by item.
-
-Engineering: **221 tests** across 3 OS × Python 3.9–3.13, `mypy --strict` clean, SARIF output
-wired into GitHub code scanning, and the analyser scans its own source with zero findings. The
-gate that actually has external validity is `bench/realworld/` — 87 cases anchored to real
-coordinates in the pinned corpus, including the 80 human-labelled findings behind the paper. The
-internal fixture corpus is a regression gate only: it was written by the same person as the
-detector, with the same blind spot, and the repository says so. `pip install failroute`.
-
-Built with an AI-assisted, human-audited workflow: the model proposes, deterministic gates verify,
-and a person owns every judgment call
-([`docs/process.md`](https://github.com/feiiiiii5/failroute/blob/main/docs/process.md)).
-
-A preprint with the full methodology is in preparation.
-
----
-
-#### 🤝 How I work upstream
-
-- **Evidence before report.** Every issue carries a failure-consequence chain — *what wrong
-  outcome does this produce in production?* — plus a minimal reproduction against the current release.
-- **Findings I cannot defend don't get filed.** Running my own analyser over a well-maintained
-  red-teaming framework produced 65 semantic-level findings. I sampled twelve, traced each one,
-  concluded all twelve were deliberate design contracts, and filed none. A tool can propose;
-  only a person can argue that a particular failure matters.
-- **One consolidated report per defect family.** Findings get grouped and deduplicated. A
-  maintainer's attention is the scarce resource, not my output.
-- **Only verifiable claims.** No inflated numbers, no claims about unmerged work. Anything
-  quantitative here is reproducible from a public checkout.
-- **The decision is the maintainer's.** I argue with evidence, accept the outcome, and follow up
-  at most once, politely. Security-sensitive findings go through a project's `SECURITY.md` or
-  private vulnerability reporting first, with details withheld until coordinated handling completes.
-
-*Most repositories on this profile are working forks used to prepare upstream patches; the merged
-work lives in the links above.*
+Repositories on this account are primarily working forks for upstream pull requests.
