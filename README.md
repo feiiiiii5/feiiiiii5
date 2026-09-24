@@ -1,43 +1,39 @@
 ### Yufeiyang Chen
 
-Undergrad studying Cyber Science and Technology at Sun Yat-sen University.
+Undergraduate in Cyber Science and Technology at Sun Yat-sen University. I have been contributing to open-source AI tooling since July 2026 and still send patches most days, mostly to evaluation and red-teaming frameworks, agent and MCP tooling, and the libraries they sit on.
 
-I submit patches to open-source ML and evaluation libraries, mainly around exception handling, fallback logic, and edge cases in test runners. I started contributing upstream in July 2026. If a PR or issue I file is unhelpful, noisy, or based on incorrect assumptions, please close it or leave a comment.
+Much of what I fix has the same shape. Something fails, nothing crashes, and the caller gets a value that looks like success. A failed page read comes back as if it were the page; a scanner reports that it wrote its findings when the write never happened.
+
+#### Where I contribute
+
+| Area | Projects |
+| --- | --- |
+| Evaluation and red teaming | [PyRIT](https://github.com/microsoft/PyRIT) · [inspect_ai](https://github.com/UKGovernmentBEIS/inspect_ai) · [inspect_evals](https://github.com/UKGovernmentBEIS/inspect_evals) · [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) · [opik](https://github.com/comet-ml/opik) · [uqlm](https://github.com/cvs-health/uqlm) · [trulens](https://github.com/truera/trulens) · [rhesis](https://github.com/rhesis-ai/rhesis) · [garak](https://github.com/NVIDIA/garak) · [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval) |
+| Agents, coding agents and MCP | [MCP servers](https://github.com/modelcontextprotocol/servers) · [fastmcp](https://github.com/PrefectHQ/fastmcp) · [serena](https://github.com/oraios/serena) · [letta-code](https://github.com/letta-ai/letta-code) · [pydantic-ai](https://github.com/pydantic/pydantic-ai) · [livekit agents](https://github.com/livekit/agents) · [haystack](https://github.com/deepset-ai/haystack) · [llama_index](https://github.com/run-llama/llama_index) · [griptape](https://github.com/griptape-ai/griptape) · [fantasy](https://github.com/charmbracelet/fantasy) · [mcp-context-forge](https://github.com/IBM/mcp-context-forge) · [zotero-mcp](https://github.com/54yyyu/zotero-mcp) |
+| Structured generation and inference | [xgrammar](https://github.com/mlc-ai/xgrammar) · [outlines](https://github.com/dottxt-ai/outlines) · [vllm-metal](https://github.com/vllm-project/vllm-metal) |
+| Tracing and observability | [openinference](https://github.com/Arize-ai/openinference) · [phoenix](https://github.com/Arize-ai/phoenix) · [openlit](https://github.com/openlit/openlit) · [langwatch](https://github.com/langwatch/langwatch) |
+| Security tooling | [fickling](https://github.com/trailofbits/fickling) · [AI-Infra-Guard](https://github.com/Tencent/AI-Infra-Guard) · [agentic_security](https://github.com/msoedov/agentic_security) · [agent-sweep](https://github.com/Ishannaik/agent-sweep) |
+| Data validation and ingestion | [pandera](https://github.com/unionai-oss/pandera) · [great_expectations](https://github.com/fivetran/great_expectations) · [qdrant-client](https://github.com/qdrant/qdrant-client) · [unstructured](https://github.com/Unstructured-IO/unstructured) |
+
+#### Some pull requests I learned from
+
+- [inspect_evals #2132](https://github.com/UKGovernmentBEIS/inspect_evals/pull/2132). With more than one epoch, Humanity's Last Exam averaged each sample across epochs before computing calibration error, so errors in opposite directions cancelled and a maximally miscalibrated run scored 0.0. Calibration is now computed per attempt, and single-epoch results are unchanged. The issue was opened by a maintainer.
+- [PyRIT #2467](https://github.com/microsoft/PyRIT/pull/2467). Gave the GCG optimisation loop explicit state types. In review the maintainer caught that my first version used `inf` to mean "not measured", which would have hidden a genuine non-finite loss; it now carries an explicit flag. The issue was opened by a maintainer.
+- [uqlm #459](https://github.com/cvs-health/uqlm/pull/459). When one judge in a panel ran out of retries, every aggregate for that prompt became NaN and the run still reported success. I reported it and sent the fix together.
+- [lm-evaluation-harness #4039](https://github.com/EleutherAI/lm-evaluation-harness/pull/4039). MATH answer normalization turned tuple answers such as `0,1` into `01`, so correct answers were marked wrong. The maintainer kept the leaderboard copy of the function frozen, because changing it would make historical scores incomparable. I had not thought of that, and it was the right call.
+- [opik #8195](https://github.com/comet-ml/opik/pull/8195). A system under evaluation could embed a verdict in its output that the judge would repeat, and the parser took the first one. My first revision escaped the values; the maintainer pointed out that rewriting the evaluated output distorts the evaluation itself, so the merged version isolates the output with namespaced delimiters instead and states the remaining risk in tests. The issue was reported by another contributor.
+- [xgrammar #834](https://github.com/mlc-ai/xgrammar/pull/834). Made `prefixItems` positional, as JSON Schema Draft 2020-12 specifies. An earlier draft accepted too much; the regression matrix caught it and it was replaced.
 
 #### failroute
 
-An AST-based static analyzer for Python that checks for exception handlers returning values callers cannot distinguish from successful runs. It detects six patterns: swallowed exceptions, silent constant fallbacks, masked exceptions, `contextlib.suppress` blocks, implicit `None` fall-through, and exception variables rebound inside their handlers.
+[failroute](https://github.com/feiiiiii5/failroute) is a static analyzer I wrote for one family of these bugs: Python exception handlers that return something a caller cannot tell apart from success. `pip install failroute`.
 
-`pip install failroute`
+Measuring it was the most useful part. On eight pinned AI packages it flags plenty that standard linters miss, but in a sample labelled by LLM agents most findings were intentional fallbacks, and among findings the linters miss, about 1 in 56 was labelled a defect. The defects it did find are also caught by `flake8 --select E722`. The repository has the full numbers and the method.
 
-I tested it against eight pinned PyPI distributions (2,124 Python files, 524,229 lines scanned). It generated 621 candidate sites. Four standard linters (ruff, bandit, pylint, and flake8 with flake8-bugbear) together covered 255 of those.
+#### How I work
 
-Evaluating a labeled sample showed a low defect yield:
-* In findings standard linters missed, roughly 1 in 56 was an actual bug.
-* In findings standard linters already flagged, 12 in 48 were actual bugs.
-* All 12 confirmed bugs were bare `except:` lines. Running `flake8 --select E722` caught all 12 across 134 total candidates, reaching the same recall with a search space roughly five times smaller.
-* The benchmark labels were produced by two rounds of LLM agents without human review. A preprint covering the methodology is in preparation.
+Before filing anything I follow the call path in the real code. When I ran failroute over PyRIT it raised several dozen warnings; I traced twelve of them, all twelve were deliberate design decisions, and I filed nothing.
 
-Project details:
-* 221 tests on Python 3.9 through 3.13 across Linux, macOS, and Windows.
-* Runs clean under `mypy --strict`, outputs SARIF for GitHub code scanning, and reports zero findings when run on its own code.
-* Validated on `bench/realworld/` (87 cases anchored to the pinned corpus). The internal test fixtures share my own blind spots and are only used as regression checks.
-* Uses an AI-assisted development workflow where models draft implementations, deterministic tests verify them, and manual review decides what gets merged (`docs/process.md`).
+I work with coding agents inside a workflow I set up myself, with my own test gates, and pull requests where AI tools shaped the change say so. Early on I gave the agents too much rope: they lost context over long runs and opened some weak and duplicate pull requests. I closed those and tightened the workflow. If one of my pull requests turns out to be wrong or not worth your time, I close it; if you find one I missed, close it or tell me. Blunt review is welcome.
 
-#### Upstream pull requests
-
-| Repo / PR | Notes |
-|---|---|
-| [microsoft/PyRIT #2467](https://github.com/microsoft/PyRIT/pull/2467) | Refactored loop state from loose locals into explicit types (issue opened by maintainer). My initial patch used `loss = float("inf")` as a sentinel for unmeasured runs, which would hide actual numeric overflows. The maintainer caught it in review and I replaced it with an explicit boolean flag so the measurement state is clear. |
-| [UKGovernmentBEIS/inspect_evals #2132](https://github.com/UKGovernmentBEIS/inspect_evals/pull/2132) | Multi-epoch calibration error in Humanity's Last Exam was being averaged across epochs before calculating calibration (issue opened by maintainer). Made a reproduction case showing this outputs 0.0 calibration error instead of 1.0 on miscalibrated answers. Fixed the multi-epoch code path, kept single-epoch outputs byte-identical, and bumped the task version. |
-| [cvs-health/uqlm #459](https://github.com/cvs-health/uqlm/pull/459) | When an evaluation model ran out of retries, it returned unhandled `NaN` values that silently poisoned the aggregate score for the whole prompt while exiting cleanly. Pruned failed models from the calculation and flagged affected prompts. |
-| [UKGovernmentBEIS/inspect_ai #5068](https://github.com/UKGovernmentBEIS/inspect_ai/pull/5068) | Removed a try/except that swallowed permission errors where an internal code comment indicated they should be raised. |
-| [Tencent/AI-Infra-Guard #539](https://github.com/Tencent/AI-Infra-Guard/pull/539) | Fixed a directory path check that allowed sibling folders sharing the same name prefix (issue reported by another user). |
-
-Three of the five issues above were scoped and opened by other people before I worked on them.
-
-#### Notes on reporting bugs
-
-I check candidate issues against actual call paths before opening tickets or PRs. For example, running failroute over PyRIT gave several dozen warnings. I stepped through twelve of them in the codebase, found that all twelve were deliberate design decisions, and filed zero issues. If an edge case does not cause a practical problem in how the software runs, I leave it alone.
-
-Repositories on this account are primarily working forks for upstream pull requests.
+Most repositories on this account are forks for upstream work.
