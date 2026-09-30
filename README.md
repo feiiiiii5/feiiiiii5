@@ -26,14 +26,16 @@ Much of what I fix has the same shape. Something fails, nothing crashes, and the
 
 #### failroute
 
-[failroute](https://github.com/feiiiiii5/failroute) is a static analyzer I wrote for one family of these bugs: Python exception handlers that return something a caller cannot tell apart from success. `pip install failroute`.
+[failroute](https://github.com/feiiiiii5/failroute) is a static analyzer I started and directed, built with help from AI coding tools, for one family of these bugs: Python exception handlers that return something a caller cannot tell apart from success. `pip install failroute`.
 
 Measuring it was the most useful part. On eight pinned AI packages it flags plenty that standard linters miss, but in a sample labelled by LLM agents most findings were intentional fallbacks, and among findings the linters miss, about 1 in 56 was labelled a defect. The defects it did find are also caught by `flake8 --select E722`. The repository has the full numbers and the method.
 
 #### How I work
 
-Before filing anything I follow the call path in the real code. When I ran failroute over PyRIT it raised several dozen warnings; I traced twelve of them, all twelve were deliberate design decisions, and I filed nothing.
+I work with coding agents inside a workflow I set up myself. Each repository's contribution rules and AI policy are read before any work, every fix has to come with a regression test that fails on the old code, and pull requests where AI tools shaped the change say so. At first I reviewed changes myself before they were submitted; as the volume grew, I moved my review to the rules and the results. Early on I gave the agents too much rope: they lost context over long runs and opened some weak and duplicate pull requests. I closed those and tightened the workflow.
 
-I work with coding agents inside a workflow I set up myself, with my own test gates, and pull requests where AI tools shaped the change say so. Early on I gave the agents too much rope: they lost context over long runs and opened some weak and duplicate pull requests. I closed those and tightened the workflow. If one of my pull requests turns out to be wrong or not worth your time, I close it; if you find one I missed, close it or tell me. Blunt review is welcome.
+Some calls stay with me. When failroute ran over PyRIT it raised several dozen warnings; twelve of them were traced through the code, all twelve were deliberate design decisions, and I filed nothing.
+
+If one of my pull requests turns out to be wrong or not worth your time, I close it; if you find one I missed, close it or tell me. Blunt review is welcome.
 
 Most repositories on this account are forks for upstream work.
