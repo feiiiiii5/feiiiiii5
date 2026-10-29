@@ -9,4 +9,4 @@ Two projects I've been working on:
 - [failroute](https://github.com/feiiiiii5/failroute) looks for Python code patterns that can hide failures behind ordinary return values. The [paper](https://github.com/feiiiiii5/failroute/blob/main/paper/arxiv/main.pdf) studies its warnings and compares them with existing linters.
 - [rewardfail](https://github.com/feiiiiii5/rewardfail) traces math verification failures through a reinforcement learning reward pipeline. The repository includes the [paper](https://github.com/feiiiiii5/rewardfail/blob/main/paper.pdf) and companion materials.
 
-I'm an [Area Triager for feedback functions and metrics at TruLens](https://github.com/truera/trulens/blob/main/MAINTAINERS.md#area-triagers).
+I'm also an [Area Triager for feedback functions and metrics at TruLens](https://github.com/truera/trulens/blob/main/MAINTAINERS.md#area-triagers).
