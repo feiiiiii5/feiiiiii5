@@ -12,13 +12,15 @@ I contribute fixes and regression tests, and work with maintainers through revie
 
 ## Projects I'm working on
 
-**[MarginPack](https://github.com/feiiiiii5/marginpack)** exports existing Zotero webpage snapshots and annotations as one offline HTML reader. It keeps comments beside their original context, reports unresolved annotations and refuses to overwrite existing files. The experimental release includes a synthetic demo, a [first-export and troubleshooting guide](https://github.com/feiiiiii5/marginpack/blob/main/docs/QUICKSTART.md) and a [platform-by-platform validation record](https://github.com/feiiiiii5/marginpack/blob/main/docs/VALIDATION.md). Built with AI coding assistance.
-
 **[failroute](https://github.com/feiiiiii5/failroute)** is a released Python tool for finding exception handlers that can hide failures behind normal-looking results. Its repository includes the CLI, tests and a public manuscript examining which of its candidate locations are also flagged by existing code checkers. A candidate is a place to investigate, not a confirmed bug.
 
 **[rewardfail](https://github.com/feiiiiii5/rewardfail)** studies failures in reinforcement learning reward software. In controlled tests, changing where a math-checker failure appeared within a batch changed the outcome from an unflagged zero reward to a batch exception. The repository includes a public manuscript, experiments and a local prototype for keeping reward values and failure information aligned. The study does not include model training.
 
 I originated failroute and selected rewardfail's research question and methods. AI coding agents assist implementation, testing, experiments, analysis and drafting. Both manuscripts are public and have not been peer reviewed.
+
+## Past experiments
+
+**[MarginPack](https://github.com/feiiiiii5/marginpack)** was an experimental exporter for existing Zotero webpage annotations. Development, testing and promotion were discontinued on 2026-11-06 because demand and differentiation were not sufficiently established. The source and last release remain available; see the [product decision and lessons](https://github.com/feiiiiii5/marginpack/blob/main/docs/CLOSEOUT.md).
 
 ## Let's talk
 
