@@ -12,7 +12,7 @@ I contribute fixes and regression tests, and work with maintainers through revie
 
 ## Projects I'm working on
 
-**[MarginPack](https://github.com/feiiiiii5/marginpack)** exports existing Zotero webpage snapshots and annotations as one offline HTML reader. It keeps comments beside their original context, reports unresolved annotations and refuses to overwrite existing files. The experimental release includes a synthetic demo and a [platform-by-platform validation record](https://github.com/feiiiiii5/marginpack/blob/main/docs/VALIDATION.md). Built with AI coding assistance.
+**[MarginPack](https://github.com/feiiiiii5/marginpack)** exports existing Zotero webpage snapshots and annotations as one offline HTML reader. It keeps comments beside their original context, reports unresolved annotations and refuses to overwrite existing files. The experimental release includes a synthetic demo, a [first-export and troubleshooting guide](https://github.com/feiiiiii5/marginpack/blob/main/docs/QUICKSTART.md) and a [platform-by-platform validation record](https://github.com/feiiiiii5/marginpack/blob/main/docs/VALIDATION.md). Built with AI coding assistance.
 
 **[failroute](https://github.com/feiiiiii5/failroute)** is a released Python tool for finding exception handlers that can hide failures behind normal-looking results. Its repository includes the CLI, tests and a public manuscript examining which of its candidate locations are also flagged by existing code checkers. A candidate is a place to investigate, not a confirmed bug.
 
