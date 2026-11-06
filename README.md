@@ -12,6 +12,8 @@ I contribute fixes and regression tests, and work with maintainers through revie
 
 ## Projects I'm working on
 
+**[ReleaseFloor](https://github.com/feiiiiii5/releasefloor)** is an experimental command-line preflight for recorded runtime requirements across release archives. It checks ELF/Mach-O members, architecture coverage and explicit release-matrix ceilings without executing the inputs. Its [product notes](https://github.com/feiiiiii5/releasefloor/blob/main/docs/PRODUCT.md) explain the competing tools and unvalidated adoption hypothesis; [validation](https://github.com/feiiiiii5/releasefloor/blob/main/docs/VALIDATION.md) separates metadata checks from real runtime compatibility. Built with AI coding assistance.
+
 **[failroute](https://github.com/feiiiiii5/failroute)** is a released Python tool for finding exception handlers that can hide failures behind normal-looking results. Its repository includes the CLI, tests and a public manuscript examining which of its candidate locations are also flagged by existing code checkers. A candidate is a place to investigate, not a confirmed bug.
 
 **[rewardfail](https://github.com/feiiiiii5/rewardfail)** studies failures in reinforcement learning reward software. In controlled tests, changing where a math-checker failure appeared within a batch changed the outcome from an unflagged zero reward to a batch exception. The repository includes a public manuscript, experiments and a local prototype for keeping reward values and failure information aligned. The study does not include model training.
