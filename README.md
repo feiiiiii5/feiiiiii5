@@ -1,29 +1,39 @@
-# Hi, I'm Yufeiyang 👋
+### Hi, I'm Yufeiyang 👋
 
-I'm an independent developer, tech enthusiast and undergraduate at Sun Yat-sen University. My work focuses on **AI evaluation and tools for AI agents**. I'm especially interested in bugs that make a system look successful when something underneath has failed.
+Undergraduate at Sun Yat-sen University, working on **AI evaluation and agent tooling**. I'm most interested in silent failures: an eval, judge or reward function that reports success while something underneath has broken.
 
-## In the open-source community
+- 🔧 **412 merged PRs across 87 open-source repositories** (as of 2026-11-07, [see them all](https://github.com/search?q=is%3Apr+is%3Amerged+author%3Afeiiiiii5+-user%3Afeiiiiii5&type=pullrequests)), mostly in LLM evaluation, red-teaming and observability tools
+- 🧭 [Area Triager](https://github.com/truera/trulens/blob/main/MAINTAINERS.md#area-triagers) for feedback functions and metrics in **TruLens**
+- 🔬 Studying how failures in reward and evaluation code turn into scores that look normal
+- 🤖 I pick the problems, design the approach and review every change; AI coding agents help with implementation, tests and drafting
 
-I contribute fixes and regression tests, and work with maintainers through review. A few examples:
+### Selected contributions
 
-- **[Inspect Evals](https://github.com/UKGovernmentBEIS/inspect_evals/pull/2132):** preserve individual benchmark attempts when computing HLE confidence calibration, so averaging repeated runs doesn't hide confidently wrong answers.
-- **[Serena](https://github.com/oraios/serena/pull/2030):** fail pending requests promptly when a write to the language server fails, instead of leaving them waiting for a timeout.
-- **[TruLens](https://github.com/truera/trulens/blob/main/MAINTAINERS.md#area-triagers):** Area Triager for feedback functions and metrics, helping with issue and pull request triage.
+| Project | What changed |
+|---|---|
+| [Inspect Evals #2132](https://github.com/UKGovernmentBEIS/inspect_evals/pull/2132) | HLE calibration keeps individual attempts, so averaging repeated runs no longer hides confidently wrong answers |
+| [Opik #8152](https://github.com/comet-ml/opik/pull/8152) | G-Eval finds the real score field and maps multi-token scores like `10` to the right log-probabilities |
+| [PyRIT #3125](https://github.com/microsoft/PyRIT/pull/3125) | Metadata filters compare keys literally on SQLite and Azure SQL, so a dotted key can't match or delete the wrong records |
+| [xgrammar #834](https://github.com/mlc-ai/xgrammar/pull/834) | JSON Schema `prefixItems` accept valid short arrays without letting later items skip a position |
+| [Serena #2030](https://github.com/oraios/serena/pull/2030) | Pending requests fail promptly when a write to the language server fails, instead of waiting for a timeout |
 
-## Projects I'm working on
+Most active in: PyRIT · Opik · TruLens · Inspect · Rhesis · OpenInference · Pandera
 
-**[ReleaseFloor](https://github.com/feiiiiii5/releasefloor)** is an experimental command-line preflight for recorded runtime requirements across release archives. It checks ELF/Mach-O members, architecture coverage and explicit release-matrix ceilings without executing the inputs. Its [product notes](https://github.com/feiiiiii5/releasefloor/blob/main/docs/PRODUCT.md) explain the competing tools and unvalidated adoption hypothesis; [validation](https://github.com/feiiiiii5/releasefloor/blob/main/docs/VALIDATION.md) separates metadata checks from real runtime compatibility. Built with AI coding assistance.
+### Projects
 
-**[failroute](https://github.com/feiiiiii5/failroute)** is a released Python tool for finding exception handlers that can hide failures behind normal-looking results. Its repository includes the CLI, tests and a public manuscript examining which of its candidate locations are also flagged by existing code checkers. A candidate is a place to investigate, not a confirmed bug.
+| | |
+|---|---|
+| [**rewardfail**](https://github.com/feiiiiii5/rewardfail) | How math-checker failures in RL reward code become zero rewards or batch crashes depending on where they land. Manuscript, experiments and a prototype fix |
+| [**failroute**](https://github.com/feiiiiii5/failroute) | Python CLI that flags exception handlers which can hide failures behind normal-looking results, with tests and a manuscript |
+| [**QuantCore**](https://github.com/feiiiiii5/QuantCore) | Local-first A-share research and backtesting workbench with a C++20 engine and zero-copy pybind11 bindings |
+| [**releasefloor**](https://github.com/feiiiiii5/releasefloor) | Checks recorded runtime requirements (ELF/Mach-O, architectures) across release archives without executing them |
 
-**[rewardfail](https://github.com/feiiiiii5/rewardfail)** studies failures in reinforcement learning reward software. In controlled tests, changing where a math-checker failure appeared within a batch changed the outcome from an unflagged zero reward to a batch exception. The repository includes a public manuscript, experiments and a local prototype for keeping reward values and failure information aligned. The study does not include model training.
+Both manuscripts are public and not yet peer reviewed.
 
-I originated failroute and selected rewardfail's research question and methods. AI coding agents assist implementation, testing, experiments, analysis and drafting. Both manuscripts are public and have not been peer reviewed.
+### Tools
 
-## Past experiments
+Python · C++20 · pybind11 · LLM eval frameworks (Inspect, TruLens, Opik, PyRIT)
 
-**[MarginPack](https://github.com/feiiiiii5/marginpack)** was an experimental exporter for existing Zotero webpage annotations. Development, testing and promotion were discontinued on 2026-11-06 because demand and differentiation were not sufficiently established. The source and last release remain available; see the [product decision and lessons](https://github.com/feiiiiii5/marginpack/blob/main/docs/CLOSEOUT.md).
+### Say hi
 
-## Let's talk
-
-Questions, suggestions and collaboration ideas are welcome. If you try one of my tools or spot something I could improve, I'd love to hear about it through a repository issue or [LinkedIn](https://www.linkedin.com/in/yufeiyang-chen-a2167143b/).
+Found a bug in one of my tools or want to collaborate? Open an issue or reach me on [LinkedIn](https://www.linkedin.com/in/yufeiyang-chen-a2167143b/).
