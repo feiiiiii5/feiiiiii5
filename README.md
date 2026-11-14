@@ -3,9 +3,9 @@
 Undergraduate at Sun Yat-sen University, working on **AI evaluation and agent tooling**. I'm most interested in silent failures: an eval, judge or reward function that reports success while something underneath has broken.
 
 - 🔧 **412 merged PRs across 87 open-source repositories** (as of 2026-11-07, [see them all](https://github.com/search?q=is%3Apr+is%3Amerged+author%3Afeiiiiii5+-user%3Afeiiiiii5&type=pullrequests)), mostly in LLM evaluation, red-teaming and observability tools
-- 🧭 [Area Triager](https://github.com/truera/trulens/blob/main/MAINTAINERS.md#area-triagers) for feedback functions and metrics in **TruLens**
+- 🧭 [Area Reviewer](https://github.com/truera/trulens/blob/main/MAINTAINERS.md#area-reviewers) for feedback functions and metrics in **TruLens**
 - 🔬 Studying how failures in reward and evaluation code turn into scores that look normal
-- 🤖 I pick the problems, design the approach and review every change; AI coding agents help with implementation, tests and drafting
+- 🤖 I select issues, set acceptance criteria, review agent-generated code and tests, and incorporate maintainer feedback.
 
 ### Selected contributions
 
