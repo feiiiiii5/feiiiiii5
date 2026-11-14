@@ -1,6 +1,6 @@
 ### Hi, I'm Yufeiyang 👋
 
-Undergraduate at Sun Yat-sen University, working on **AI evaluation and agent tooling**. I'm most interested in silent failures: an eval, judge or reward function that reports success while something underneath has broken.
+I'm an **independent developer and open-source contributor**, working on AI evaluation and agent tooling. I'm especially interested in silent failures: an eval, judge or reward function that returns a normal-looking result after something underneath has failed. I also study Cyber Science and Technology at Sun Yat-sen University.
 
 - 🔧 **412 merged PRs across 87 open-source repositories** (as of 2026-11-07, [see them all](https://github.com/search?q=is%3Apr+is%3Amerged+author%3Afeiiiiii5+-user%3Afeiiiiii5&type=pullrequests)), mostly in LLM evaluation, red-teaming and observability tools
 - 🧭 [Area Reviewer](https://github.com/truera/trulens/blob/main/MAINTAINERS.md#area-reviewers) for feedback functions and metrics in **TruLens**
