@@ -4,7 +4,7 @@ I am an independent developer and open-source contributor focusing on AI evaluat
 
 My primary research and engineering interest is **silent failures in evaluation pipelines**—cases where an eval harness, LLM judge, or RL reward function hits an underlying fault but still returns a plausible, normal-looking score.
 
-* **Open Source:** [412 merged PRs across 87 repositories](YOUR_LINK_HERE) (as of Nov 2025), primarily across LLM evaluation, observability, and structured generation.
+* **Open Source:** [412 merged PRs across 87 repositories](YOUR_LINK_HERE) (as of Nov 2026), primarily across LLM evaluation, observability, and structured generation.
 * **Maintainer / Reviewer:** Area Reviewer for feedback functions and metrics in [TruLens](https://github.com/truera/trulens).
 * **Active Ecosystems:** PyRIT · Opik · TruLens · Inspect · Rhesis · OpenInference · Pandera
 
