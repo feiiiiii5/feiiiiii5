@@ -1,39 +1,44 @@
-### Hi, I'm Fei 👋
+### Hi, I'm Fei
 
-I'm an **independent developer and open-source contributor**, working on AI evaluation and agent tooling. I'm especially interested in silent failures: an eval, judge or reward function that returns a normal-looking result after something underneath has failed. I also study Cyber Science and Technology at Sun Yat-sen University.
+I am an independent developer and open-source contributor focusing on AI evaluation, red-teaming, and agent tooling. I also study Cyber Science and Technology at Sun Yat-sen University.
 
-- 🔧 **412 merged PRs across 87 open-source repositories** (as of 2026-11-07, [see them all](https://github.com/search?q=is%3Apr+is%3Amerged+author%3Afeiiiiii5+-user%3Afeiiiiii5&type=pullrequests)), mostly in LLM evaluation, red-teaming and observability tools
-- 🧭 [Area Reviewer](https://github.com/truera/trulens/blob/main/MAINTAINERS.md#area-reviewers) for feedback functions and metrics in **TruLens**
-- 🔬 Studying how failures in reward and evaluation code turn into scores that look normal
-- 🤖 I select issues, set acceptance criteria, review agent-generated code and tests, and incorporate maintainer feedback.
+My primary research and engineering interest is **silent failures in evaluation pipelines**—cases where an eval harness, LLM judge, or RL reward function hits an underlying fault but still returns a plausible, normal-looking score.
 
-### Selected contributions
+* **Open Source:** [412 merged PRs across 87 repositories](YOUR_LINK_HERE) (as of Nov 2025), primarily across LLM evaluation, observability, and structured generation.
+* **Maintainer / Reviewer:** Area Reviewer for feedback functions and metrics in [TruLens](https://github.com/truera/trulens).
+* **Active Ecosystems:** PyRIT · Opik · TruLens · Inspect · Rhesis · OpenInference · Pandera
 
-| Project | What changed |
-|---|---|
-| [Inspect Evals #2132](https://github.com/UKGovernmentBEIS/inspect_evals/pull/2132) | HLE calibration keeps individual attempts, so averaging repeated runs no longer hides confidently wrong answers |
-| [Opik #8152](https://github.com/comet-ml/opik/pull/8152) | G-Eval finds the real score field and maps multi-token scores like `10` to the right log-probabilities |
-| [PyRIT #3125](https://github.com/microsoft/PyRIT/pull/3125) | Metadata filters compare keys literally on SQLite and Azure SQL, so a dotted key can't match or delete the wrong records |
-| [xgrammar #834](https://github.com/mlc-ai/xgrammar/pull/834) | JSON Schema `prefixItems` accept valid short arrays without letting later items skip a position |
-| [Serena #2030](https://github.com/oraios/serena/pull/2030) | Pending requests fail promptly when a write to the language server fails, instead of waiting for a timeout |
+---
 
-Most active in: PyRIT · Opik · TruLens · Inspect · Rhesis · OpenInference · Pandera
+### Selected Contributions
 
-### Projects
+| PR | Impact & Mechanism |
+| :--- | :--- |
+| **[Inspect Evals #2132](LINK)** | Preserved individual attempt outcomes in HLE calibration so averaging repeated runs no longer masks high-confidence incorrect answers. |
+| **[Opik #8152](LINK)** | Fixed G-Eval score field resolution and mapped multi-token scores (e.g., `10`) to their correct log-probabilities. |
+| **[PyRIT #3125](LINK)** | Enforced literal key comparisons for metadata filters on SQLite and Azure SQL, preventing dotted keys from matching or deleting unintended records. |
+| **[xgrammar #834](LINK)** | Allowed valid short arrays in JSON Schema `prefixItems` without permitting subsequent items to skip positional validation. |
+| **[Serena #2030](LINK)** | Made pending requests fail immediately upon language server write errors instead of hanging until timeout. |
 
-| | |
-|---|---|
-| [**rewardfail**](https://github.com/feiiiiii5/rewardfail) | How math-checker failures in RL reward code become zero rewards or batch crashes depending on where they land. Manuscript, experiments and a prototype fix |
-| [**failroute**](https://github.com/feiiiiii5/failroute) | Python CLI that flags exception handlers which can hide failures behind normal-looking results, with tests and a manuscript |
-| [**QuantCore**](https://github.com/feiiiiii5/QuantCore) | Local-first A-share research and backtesting workbench with a C++20 engine and zero-copy pybind11 bindings |
-| [**releasefloor**](https://github.com/feiiiiii5/releasefloor) | Checks recorded runtime requirements (ELF/Mach-O, architectures) across release archives without executing them |
+> **Note on workflow:** I use coding agents in my development loop. I manually triage issues, define acceptance criteria, verify root causes, and rigorously audit and test all generated patches before submitting PRs and addressing maintainer review.
 
-Both manuscripts are public and not yet peer reviewed.
+---
 
-### Tools
+### Research & Projects
 
-Python · C++20 · pybind11 · LLM eval frameworks (Inspect, TruLens, Opik, PyRIT)
+**Silent Failures & Reliability**
+* **[rewardfail](LINK)** — Empirical study and prototype fix on how math-checker failures in RL reward code silently degrade into zero rewards or batch crashes depending on exception boundaries. *(Code, experiments & non-peer-reviewed preprint)*
+* **[failroute](LINK)** — Static analysis CLI for Python that flags exception handlers capable of masking runtime failures behind normal-looking return values. *(Tooling & non-peer-reviewed preprint)*
 
-### Say hi
+**Systems & Tooling**
+* **[QuantCore](LINK)** — Local-first A-share research and backtesting workbench powered by a C++20 execution engine and zero-copy `pybind11` bindings.
+* **[releasefloor](LINK)** — Static inspector that verifies recorded runtime requirements (ELF/Mach-O headers, target architectures) across release archives without binary execution.
 
-Found a bug in one of my tools or want to collaborate? Open an issue or reach me on [LinkedIn](https://www.linkedin.com/in/yufeiyang-chen-a2167143b/).
+---
+
+### Stack & Contact
+
+* **Languages & Core:** Python, C++20, `pybind11`, SQL
+* **AI & Eval Infra:** Inspect, TruLens, Opik, PyRIT, OpenInference
+
+Found a bug in one of my tools or want to talk about eval reliability? Feel free to open an issue in the respective repo or reach out on [LinkedIn](YOUR_LINKEDIN_URL).
